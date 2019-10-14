@@ -32,8 +32,8 @@ def parent_selection(player_number, fitnesses):
     parent1 = 0
     parent2 = 0
 
-    a = random.randomint(0,player_number-1)
-    b = random.randomint(0,player_number-1)
+    a = random.randint(0,player_number-1)
+    b = random.randint(0,player_number-1)
 
     if fitnesses[a] > fitnesses[b]:
         parent1 = a
@@ -42,8 +42,8 @@ def parent_selection(player_number, fitnesses):
 
     while True:
 
-        a = random.randomint(0,player_number-1)
-        b = random.randomint(0,player_number-1)
+        a = random.randint(0,player_number-1)
+        b = random.randint(0,player_number-1)
 
         if fitnesses[a] > fitnesses[b]:
             parent2 = a
