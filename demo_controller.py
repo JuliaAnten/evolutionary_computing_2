@@ -9,6 +9,8 @@ class player_controller(Controller):
 	def __init__(self, _n_hidden):
 		# Number of hidden neurons
 		self.n_hidden = [_n_hidden]
+		self.prev_action = [0,0,0,0,0]
+		self.changecount = 0
 
 	def control(self, inputs, controller):
 		# Normalises the input using min-max scaling
@@ -64,6 +66,10 @@ class player_controller(Controller):
 		else:
 			release = 0
 
+		if not self.prev_action == [left, right, jump, shoot, release]:
+			self.changecount +=1
+			print(self.changecount)
+			self.prev_action = [left, right, jump, shoot, release]
 		return [left, right, jump, shoot, release]
 
 # implements controller structure for enemy

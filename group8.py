@@ -23,11 +23,14 @@ if not os.path.exists(experiment_name):
 
 n_hidden_neurons = 10
 
-
 # initializes environment with ai player using random controller, playing against static enemy
-env = Environment(experiment_name=experiment_name,
-                  player_controller=player_controller(n_hidden_neurons),
-                  speed='fastest')
 
-sol = np.loadtxt('solutions_demo/demo_1.txt')
-env.play(sol)
+for i in range(20):
+    env = Environment(experiment_name=experiment_name,
+                      player_controller=player_controller(n_hidden_neurons),
+                      speed='fastest')
+    controller = np.random.normal(loc = 0, scale=1, size=(265))
+    # for i, el in enumerate(controller):
+    #     if np.random.random() > 0.01:
+    #         controller[i] = 0
+    env.play(controller)
