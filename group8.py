@@ -34,7 +34,7 @@ def main(pop_size, mutation_rate, nr_generations, initial_parent="sparse", enemy
     # initializes environment with ai player using random controller, playing against static enemy
     env = Environment(experiment_name=experiment_name,
                       player_controller=player_controller(n_hidden_neurons),
-                      speed='fastest')
+                      speed='fastest',enemies=[enemy])
 
     # Create the population
     population = initial_population(pop_size, initial_parent)
