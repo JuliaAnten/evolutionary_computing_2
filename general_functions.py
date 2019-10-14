@@ -78,4 +78,4 @@ def mutate(player, mutation_rate):
     # 1 waarde vervangen (uit normaal distribution)
 
     if random.random() < mutation_rate:
-        player[random.randomint(0,len(player))] = np.random.normal(loc = 0, scale=1)
+        player[random.randint(0,len(player))] = np.random.normal(loc = 0, scale=1)

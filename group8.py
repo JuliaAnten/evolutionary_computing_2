@@ -9,6 +9,8 @@
 import sys, os
 sys.path.insert(0, 'evoman')
 from environment import Environment
+from general_functions import *
+import matplotlib.pyplot as plt
 
 from demo_controller import player_controller
 import numpy as np
@@ -29,23 +31,46 @@ elements = n_hidden_neurons * (input_sensor + output_sensor) + output_sensor + n
 
 def main(pop_size, mutation_rate, nr_generations, initial_parent="sparse", enemy = 1):
 
-    # Create the population
-    # population = initial_population(pop_size, initial_parent)
-
-    # check for the entire population the fitness
-    # for index, data in enumerate(population):
-    #     fitness = fitnesscheck(data, enemy = [enemy])
-
-
     # initializes environment with ai player using random controller, playing against static enemy
     env = Environment(experiment_name=experiment_name,
                       player_controller=player_controller(n_hidden_neurons),
                       speed='fastest')
-    controller = np.random.normal(loc = 0, scale=1, size=(elements))
-    # for i, el in enumerate(controller):
-    #     if np.random.random() > 0.01:
-    #         controller[i] = 0
-    env.play(controller)
+
+    # Create the population
+    population = initial_population(pop_size, initial_parent)
+    meanlist = []
+    maxlist = []
+
+    maxfitness = 0
+    for i in range(nr_generations):
+
+        fitnesslist = []
+        # check for the entire population the fitness
+        for index, individual in enumerate(population):
+            env.play(np.array(individual))
+            fitnesslist.append(env.fitness_single())
+            if env.fitness_single() > maxfitness:
+                with open("woohoo.txt", "w") as txt_file:
+                    for el in individual:
+                        txt_file.write(str(el)+ "\n")
+
+
+        new_population = []
+        for j in range(int(pop_size/2)):
+            parent1, parent2 = parent_selection(len(fitnesslist), fitnesslist)
+            child1, child2 = cross_breeding(population[parent1], population[parent2])
+
+            mutate(child1, mutation_rate), mutate(child2, mutation_rate)
+            new_population.append(child1)
+            new_population.append(child2)
+        population = new_population
+        meanlist.append(np.mean(fitnesslist))
+        maxlist.append(np.max(fitnesslist))
+    print(maxfitness)
+    plt.plot(meanlist)
+    plt.plot(maxlist)
+
+    plt.show()
 
 # Run the algorithm
 if __name__ == '__main__':
@@ -55,4 +80,4 @@ if __name__ == '__main__':
     # m_rate = 0.01??
     level = 1
 
-    main(pop_size=10, mutation_rate=0.01, nr_generations=5, initial_parent=selection, enemy = level)
+    main(pop_size=64, mutation_rate=0.01, nr_generations=10, initial_parent=selection, enemy = level)
