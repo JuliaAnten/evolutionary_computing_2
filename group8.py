@@ -29,12 +29,16 @@ input_sensor = 20
 output_sensor = 5
 elements = n_hidden_neurons * (input_sensor + output_sensor) + output_sensor + n_hidden_neurons
 
-def main(pop_size, mutation_rate, nr_generations, initial_parent="sparse", enemy = 1):
+def main(pop_size, mutation_rate, nr_generations, initial_parent="sparse", enemy = [1], mutation = "replace"):
 
     # initializes environment with ai player using random controller, playing against static enemy
-    env = Environment(experiment_name=experiment_name,
+    env0 = Environment(experiment_name=experiment_name,
                       player_controller=player_controller(n_hidden_neurons),
-                      speed='fastest',enemies=[enemy])
+                      speed='fastest',enemies=[enemy[0]])
+    
+    env1 = Environment(experiment_name=experiment_name,
+                      player_controller=player_controller(n_hidden_neurons),
+                      speed='fastest',enemies=[enemy[1]])
 
     # Create the population
     population = initial_population(pop_size, initial_parent)
@@ -43,14 +47,16 @@ def main(pop_size, mutation_rate, nr_generations, initial_parent="sparse", enemy
 
     maxfitness = 0
     for i in range(nr_generations):
+        print(i)
 
         fitnesslist = []
         # check for the entire population the fitness
         for index, individual in enumerate(population):
-            env.play(np.array(individual))
-            fitnesslist.append(env.fitness_single())
-            if env.fitness_single() > maxfitness:
-                maxfitness = env.fitness_single()
+            env0.play(np.array(individual))
+            env1.play(np.array(individual))
+            fitnesslist.append(env0.fitness_single()+env1.fitness_single())
+            if fitnesslist[-1] > maxfitness:
+                maxfitness = fitnesslist[-1]
                 with open("woohoo.txt", "w") as txt_file:
                     for el in individual:
                         txt_file.write(str(el)+ "\n")
@@ -60,8 +66,12 @@ def main(pop_size, mutation_rate, nr_generations, initial_parent="sparse", enemy
         for j in range(int(pop_size/2)):
             parent1, parent2 = parent_selection(len(fitnesslist), fitnesslist)
             child1, child2 = cross_breeding(population[parent1], population[parent2])
-
-            mutate(child1, mutation_rate), mutate(child2, mutation_rate)
+            
+            if mutation == "replace":
+                mutate_replace(child1, mutation_rate), mutate_replace(child2, mutation_rate)
+            else:
+                mutate_alter(child1, mutation_rate), mutate_alter(child2, mutation_rate)
+            
             new_population.append(child1)
             new_population.append(child2)
         population = new_population
@@ -77,8 +87,9 @@ def main(pop_size, mutation_rate, nr_generations, initial_parent="sparse", enemy
 if __name__ == '__main__':
 
     # Parameters for experiment
-    selection = "sparse" #or full
+    selection = "sparse" # sparse or full
     # m_rate = 0.01??
     level = 1
+    mutate_type = "alter" # alter or replace
 
-    main(pop_size=64, mutation_rate=0.5, nr_generations=10, initial_parent=selection, enemy = 4)
+    main(pop_size=64, mutation_rate=1/elements, nr_generations=10, initial_parent=selection, enemy = [4,7], mutation = mutate_type)

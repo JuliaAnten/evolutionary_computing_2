@@ -74,10 +74,15 @@ def cross_breeding(parent1, parent2):
 
     return child1, child2
 
-def mutate(player, mutation_rate):
+def mutate_replace(player, mutation_rate):
     # 1 waarde vervangen (uit normaal distribution)
 
-    if random.random() < mutation_rate:
-        
-        for i in range(5):
-            player[random.randint(0,len(player)-1)] = np.random.normal(loc = 0, scale=1)
+    for i in range(len(player)):
+        if random.random() < mutation_rate:
+            player[i] = np.random.normal(loc = 0, scale=1)
+            
+def mutate_alter(player, mutation_rate):
+    
+    for i in range(len(player)):
+        if random.random() < mutation_rate:
+            player[i] = player[i] + np.random.normal(loc = 0, scale=0.1)
