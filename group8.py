@@ -69,13 +69,13 @@ def main(index, pop_size, mutation_rate, nr_generations, initial_parent="sparse"
                 playerlist.append(env0.get_playerlife())
                 if fitnesslist[-1] > maxfitness:
                     maxfitness = fitnesslist[-1]
-                    with open("bestrun" + index + ".txt", "w") as txt_file:
+                    with open("bestrun" + str(index) + ".txt", "w") as txt_file:
                         for el in individual:
                             txt_file.write(str(el)+ "\n")
                             
                 if fitnesslist[-1] > thisfitness:
                     thisfitness = fitnesslist[-1]
-                    with open("lastrun" + index + ".txt", "w") as txt_file:
+                    with open("lastrun" + str(index) + ".txt", "w") as txt_file:
                         for el in individual:
                             txt_file.write(str(el)+ "\n")
                             
@@ -89,13 +89,13 @@ def main(index, pop_size, mutation_rate, nr_generations, initial_parent="sparse"
                 playerlist.append(env0.get_playerlife())
                 if fitnesslist[-1] > maxfitness:
                     maxfitness = fitnesslist[-1]
-                    with open("bestrun" + index + ".txt", "w") as txt_file:
+                    with open("bestrun" + str(index) + ".txt", "w") as txt_file:
                         for el in individual:
                             txt_file.write(str(el)+ "\n")
                             
                 if fitnesslist[-1] > thisfitness:
                     thisfitness = fitnesslist[-1]
-                    with open("lastrun" + index + ".txt", "w") as txt_file:
+                    with open("lastrun" + str(index) + ".txt", "w") as txt_file:
                         for el in individual:
                             txt_file.write(str(el)+ "\n")
 
@@ -134,7 +134,7 @@ def main(index, pop_size, mutation_rate, nr_generations, initial_parent="sparse"
     
 def save_data(data, index, title):
 
-    with open(title + index +".txt", "w") as txt_file:
+    with open(title + str(index) +".txt", "w") as txt_file:
 
         for row in data:
             txt_file.write(str(row)+"\n")
