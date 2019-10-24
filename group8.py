@@ -61,7 +61,7 @@ def main(index, pop_size, mutation_rate, nr_generations, initial_parent="sparse"
         
         if i < nr_generations / 2:
             # check for the entire population the fitness
-            for index, individual in enumerate(population):
+            for theindex, individual in enumerate(population):
                 env0.play(np.array(individual))
                 #env1.play(np.array(individual))
                 fitnesslist.append(env0.fitness_single())
@@ -81,7 +81,7 @@ def main(index, pop_size, mutation_rate, nr_generations, initial_parent="sparse"
                             
         else:
             # check for the entire population the fitness
-            for index, individual in enumerate(population):
+            for theindex, individual in enumerate(population):
                 #env0.play(np.array(individual))
                 env1.play(np.array(individual))
                 fitnesslist.append(env1.fitness_single())
