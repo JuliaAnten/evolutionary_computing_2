@@ -35,29 +35,55 @@ def simple_data(filename):
     
     return results
 
-def line_plot(best, average):
+def line_plot(bestr, averager,besta,averagea):
     
     plt.figure()
-    plt.plot(best)
-    plt.plot(average)
-    plt.title("Fitness scores for replace mutation")
+    plt.plot(bestr)
+    plt.plot(averager)
+    plt.plot(besta)
+    plt.plot(averagea)
+    plt.title("Fitness scores with both types of mutations")
     plt.xlabel("generation")
     plt.ylabel("fitness")
-    plt.legend(["best result", "average result"])
+    plt.legend(["best result with replace", "average result with replace", "best result with alter", "average result with alter"])
+    plt.show()
+    
+def enemy_plot(bestr, averager,besta,averagea):
+    
+    plt.figure()
+    plt.plot(bestr)
+    plt.plot(averager)
+    plt.plot(besta)
+    plt.plot(averagea)
+    plt.title("Enemy life for both types of mutations")
+    plt.xlabel("generation")
+    plt.ylabel("life points")
+    plt.legend(["best result with replace", "average result with replace", "best result with alter", "average result with alter"])
+    plt.show()
+    
+def player_plot(bestr, averager,besta,averagea):
+    
+    plt.figure()
+    plt.plot(bestr)
+    plt.plot(averager)
+    plt.plot(besta)
+    plt.plot(averagea)
+    plt.title("Player life for both types of mutations")
+    plt.xlabel("generation")
+    plt.ylabel("life points")
+    plt.legend(["best result with replace", "average result with replace", "best result with alter", "average result with alter"])
     plt.show()
     
 def boxplot(replace,alter):
     
     plt.figure()
     box1 = plt.boxplot(replace,positions=[0.75],patch_artist = True)
-    #plt.setp(thebox['medians'],color = 'green')
     for element in ['boxes', 'whiskers', 'fliers', 'means', 'medians', 'caps']:
         plt.setp(box1[element], color='red')
     for patch in box1['boxes']:
         patch.set(facecolor='white')
         
     box2 = plt.boxplot(alter,positions=[1.25],patch_artist = True)
-    #plt.setp(thebox['medians'],color = 'green')
     for element in ['boxes', 'whiskers', 'fliers', 'means', 'medians', 'caps']:
         plt.setp(box2[element], color='green')
     for patch in box2['boxes']:
@@ -70,45 +96,99 @@ def boxplot(replace,alter):
     
 
 def averages(data):
-    print(data)
     
     average = []
     
     for i in range(len(data[0])):
-        print(i)
         current = 0
         
         for row in range(len(data)):
-            #print(data)
             current += data[row][i]
             
         average.append(current/len(data))
         
     return average
 
-maxdata = []
-
+maxdatar = []
 for i in range(10):
-    maxdata.append(simple_data("replaceresults/maxfit" + str(i) + ".txt")[0:15])
+    maxdatar.append(simple_data("replaceresults/maxfit" + str(i) + ".txt")[0:15])
     
-meandata = []
-
+meandatar = []
 for i in range(10):
-    meandata.append(simple_data("replaceresults/meanfit" + str(i) + ".txt")[0:15])
+    meandatar.append(simple_data("replaceresults/meanfit" + str(i) + ".txt")[0:15])
+    
+maxdataa = []
+for i in range(10):
+    maxdataa.append(simple_data("alterresults/maxfit" + str(i) + ".txt")[0:15])
+    
+meandataa = []
+for i in range(10):
+    meandataa.append(simple_data("alterresults/meanfit" + str(i) + ".txt")[0:15])
+maxdatar = averages(maxdatar)
+meandatar = averages(meandatar)
+maxdataa = averages(maxdataa)
+meandataa = averages(meandataa)
+line_plot(maxdatar, meandatar, maxdataa, meandataa)
 
-maxdata = averages(maxdata)
-meandata = averages(meandata)
+maxdatar = []
+for i in range(10):
+    maxdatar.append(simple_data("replaceresults/playermax" + str(i) + ".txt")[0:15])
+    
+meandatar = []
+for i in range(10):
+    meandatar.append(simple_data("replaceresults/playerav" + str(i) + ".txt")[0:15])
+    
+maxdataa = []
+for i in range(10):
+    maxdataa.append(simple_data("alterresults/playermax" + str(i) + ".txt")[0:15])
+    
+meandataa = []
+for i in range(10):
+    meandataa.append(simple_data("alterresults/playerav" + str(i) + ".txt")[0:15])
+maxdatar = averages(maxdatar)
+meandatar = averages(meandatar)
+maxdataa = averages(maxdataa)
+meandataa = averages(meandataa)
+player_plot(maxdatar, meandatar, maxdataa, meandataa)
 
-line_plot(maxdata, meandata)
+maxdatar = []
+for i in range(10):
+    maxdatar.append(simple_data("replaceresults/enemymax" + str(i) + ".txt")[0:15])
+    
+meandatar = []
+for i in range(10):
+    meandatar.append(simple_data("replaceresults/enemyav" + str(i) + ".txt")[0:15])
+    
+maxdataa = []
+for i in range(10):
+    maxdataa.append(simple_data("alterresults/enemymax" + str(i) + ".txt")[0:15])
+    
+meandataa = []
+for i in range(10):
+    meandataa.append(simple_data("alterresults/enemyav" + str(i) + ".txt")[0:15])
+maxdatar = averages(maxdatar)
+meandatar = averages(meandatar)
+maxdataa = averages(maxdataa)
+meandataa = averages(meandataa)
+enemy_plot(maxdatar, meandatar, maxdataa, meandataa)
         
-endbox = [[] for i in range(8)]
-
+endboxr = [[] for i in range(8)]
 for i in range(10):
     runs = open_data("replaceresults/bestrunfitness" + str(i) + ".txt")
     runs = averages(runs)
     
     for j in range(8):
-        endbox[j].append(runs[j])
+        endboxr[j].append(runs[j])
     
-endbox = averages(endbox)
-boxplot(endbox,endbox)
+endboxr = averages(endboxr)
+
+endboxa = [[] for i in range(8)]
+for i in range(10):
+    runs = open_data("alterresults/bestrunfitness" + str(i) + ".txt")
+    runs = averages(runs)
+    
+    for j in range(8):
+        endboxa[j].append(runs[j])
+    
+endboxa = averages(endboxa)
+boxplot(endboxr,endboxa)

@@ -30,7 +30,7 @@ env = Environment(experiment_name=experiment_name,
 				  enemymode="static",
 				  level=2)
 
-sol = np.loadtxt('replaceresults/bestrun9.txt')
+sol = np.loadtxt('alterresults/bestrun0.txt')
 print('\n LOADING SAVED GENERALIST SOLUTION FOR ALL ENEMIES \n')
 
 results = []
@@ -46,7 +46,7 @@ for i in range(5):
         env.play(sol)
         results[-1].append(env.fitness_single())
 
-with open("bestrunfitness9.txt", "w") as txt_file:
+with open("bestrunfitness0.txt", "w") as txt_file:
 
     for row in results:
         txt_file.write(str(row)+"\n")
