@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 def open_data(filename):
     with open(filename, "r") as txt_file:
@@ -28,43 +29,82 @@ def simple_data(filename):
     
     return results
 
-def line_plot(bestr, averager,besta,averagea):
+def line_plot(bestr, averager,besta,averagea, bestrstd, averagerstd,bestastd,averageastd):
+    
+    upbestr = [m + s for m, s in zip(bestr,bestrstd)]
+    lowbestr = [m - s for m, s in zip(bestr,bestrstd)]
+    upmeanr = [m + s for m, s in zip(averager, averagerstd)]
+    lowmeanr = [m - s for m, s in zip(averager, averagerstd)]
+    upbesta = [m + s for m, s in zip(besta,bestastd)]
+    lowbesta = [m - s for m, s in zip(besta,bestastd)]
+    upmeana = [m + s for m, s in zip(averagea, averageastd)]
+    lowmeana = [m - s for m, s in zip(averagea, averageastd)]
     
     plt.figure()
-    plt.plot(bestr)
-    plt.plot(averager)
-    plt.plot(besta)
-    plt.plot(averagea)
+    plt.plot(bestr, label= "best result with replace")
+    plt.plot(averager, label= "average result with replace")
+    plt.plot(averagea, label= "best result with alter")
+    plt.plot(besta, label= "average result with alter")
+    plt.fill_between(range(len(bestr)), upbestr, lowbestr, alpha = 0.1, label = "sd best replace")
+    plt.fill_between(range(len(averager)), upmeanr, lowmeanr, alpha = 0.1, label = "sd average replace")
+    plt.fill_between(range(len(besta)), upbesta, lowbesta, alpha = 0.1, label = "sd best alter")
+    plt.fill_between(range(len(averagea)), upmeana, lowmeana, alpha = 0.1, label = "sd average alter")
+    plt.legend(loc='center right', bbox_to_anchor=(1.4, 0.9))
     plt.title("Fitness scores with both types of mutations")
     plt.xlabel("generation")
     plt.ylabel("fitness")
-    plt.legend(["best result with replace", "average result with replace", "best result with alter", "average result with alter"])
     plt.show()
     
-def enemy_plot(bestr, averager,besta,averagea):
+def enemy_plot(bestr, averager,besta,averagea, bestrstd, averagerstd,bestastd,averageastd):
+    
+    upbestr = [m + s for m, s in zip(bestr,bestrstd)]
+    lowbestr = [m - s for m, s in zip(bestr,bestrstd)]
+    upmeanr = [m + s for m, s in zip(averager, averagerstd)]
+    lowmeanr = [m - s for m, s in zip(averager, averagerstd)]
+    upbesta = [m + s for m, s in zip(besta,bestastd)]
+    lowbesta = [m - s for m, s in zip(besta,bestastd)]
+    upmeana = [m + s for m, s in zip(averagea, averageastd)]
+    lowmeana = [m - s for m, s in zip(averagea, averageastd)]
     
     plt.figure()
-    plt.plot(bestr)
-    plt.plot(averager)
-    plt.plot(besta)
-    plt.plot(averagea)
+    plt.plot(bestr, label= "best result with replace")
+    plt.plot(averager, label= "average result with replace")
+    plt.plot(averagea, label= "best result with alter")
+    plt.plot(besta, label= "average result with alter")
+    plt.fill_between(range(len(bestr)), upbestr, lowbestr, alpha = 0.1, label = "sd best replace")
+    plt.fill_between(range(len(averager)), upmeanr, lowmeanr, alpha = 0.1, label = "sd average replace")
+    plt.fill_between(range(len(besta)), upbesta, lowbesta, alpha = 0.1, label = "sd best alter")
+    plt.fill_between(range(len(averagea)), upmeana, lowmeana, alpha = 0.1, label = "sd average alter")
+    plt.legend(loc='center right', bbox_to_anchor=(1.4, 0.9))
     plt.title("Enemy life for both types of mutations")
     plt.xlabel("generation")
     plt.ylabel("life points")
-    plt.legend(["best result with replace", "average result with replace", "best result with alter", "average result with alter"])
     plt.show()
     
-def player_plot(bestr, averager,besta,averagea):
+def player_plot(bestr, averager,besta,averagea, bestrstd, averagerstd,bestastd,averageastd):
+    
+    upbestr = [m + s for m, s in zip(bestr,bestrstd)]
+    lowbestr = [m - s for m, s in zip(bestr,bestrstd)]
+    upmeanr = [m + s for m, s in zip(averager, averagerstd)]
+    lowmeanr = [m - s for m, s in zip(averager, averagerstd)]
+    upbesta = [m + s for m, s in zip(besta,bestastd)]
+    lowbesta = [m - s for m, s in zip(besta,bestastd)]
+    upmeana = [m + s for m, s in zip(averagea, averageastd)]
+    lowmeana = [m - s for m, s in zip(averagea, averageastd)]
     
     plt.figure()
-    plt.plot(bestr)
-    plt.plot(averager)
-    plt.plot(besta)
-    plt.plot(averagea)
+    plt.plot(bestr, label= "best result with replace")
+    plt.plot(averager, label= "average result with replace")
+    plt.plot(averagea, label= "best result with alter")
+    plt.plot(besta, label= "average result with alter")
+    plt.fill_between(range(len(bestr)), upbestr, lowbestr, alpha = 0.1, label = "sd best replace")
+    plt.fill_between(range(len(averager)), upmeanr, lowmeanr, alpha = 0.1, label = "sd average replace")
+    plt.fill_between(range(len(besta)), upbesta, lowbesta, alpha = 0.1, label = "sd best alter")
+    plt.fill_between(range(len(averagea)), upmeana, lowmeana, alpha = 0.1, label = "sd average alter")
+    plt.legend(loc='center right', bbox_to_anchor=(1.4, 0.9))
     plt.title("Player life for both types of mutations")
     plt.xlabel("generation")
     plt.ylabel("life points")
-    plt.legend(["best result with replace", "average result with replace", "best result with alter", "average result with alter"])
     plt.show()
     
 def boxplot(replace,alter):
@@ -91,16 +131,18 @@ def boxplot(replace,alter):
 def averages(data):
     
     average = []
+    standard = []
     
     for i in range(len(data[0])):
-        current = 0
+        temp = []
         
         for row in range(len(data)):
-            current += data[row][i]
+            temp.append(data[row][i])
             
-        average.append(current/len(data))
+        average.append(np.mean(temp))
+        standard.append(np.std(temp))
         
-    return average
+    return average, standard
 
 maxdatar = []
 for i in range(10):
@@ -117,11 +159,11 @@ for i in range(10):
 meandataa = []
 for i in range(10):
     meandataa.append(simple_data("alterresults/meanfit" + str(i) + ".txt")[0:15])
-maxdatar = averages(maxdatar)
-meandatar = averages(meandatar)
-maxdataa = averages(maxdataa)
-meandataa = averages(meandataa)
-line_plot(maxdatar, meandatar, maxdataa, meandataa)
+maxdatar, maxdatarstd = averages(maxdatar)
+meandatar, meandatarstd = averages(meandatar)
+maxdataa, maxdataastd = averages(maxdataa)
+meandataa, meandataastd = averages(meandataa)
+line_plot(maxdatar, meandatar, maxdataa, meandataa, maxdatarstd, meandatarstd, maxdataastd, meandataastd)
 
 maxdatar = []
 for i in range(10):
@@ -138,11 +180,11 @@ for i in range(10):
 meandataa = []
 for i in range(10):
     meandataa.append(simple_data("alterresults/playerav" + str(i) + ".txt")[0:15])
-maxdatar = averages(maxdatar)
-meandatar = averages(meandatar)
-maxdataa = averages(maxdataa)
-meandataa = averages(meandataa)
-player_plot(maxdatar, meandatar, maxdataa, meandataa)
+maxdatar, maxdatarstd = averages(maxdatar)
+meandatar, meandatarstd = averages(meandatar)
+maxdataa, maxdataastd = averages(maxdataa)
+meandataa, meandataastd = averages(meandataa)
+player_plot(maxdatar, meandatar, maxdataa, meandataa, maxdatarstd, meandatarstd, maxdataastd, meandataastd)
 
 maxdatar = []
 for i in range(10):
@@ -159,29 +201,29 @@ for i in range(10):
 meandataa = []
 for i in range(10):
     meandataa.append(simple_data("alterresults/enemyav" + str(i) + ".txt")[0:15])
-maxdatar = averages(maxdatar)
-meandatar = averages(meandatar)
-maxdataa = averages(maxdataa)
-meandataa = averages(meandataa)
-enemy_plot(maxdatar, meandatar, maxdataa, meandataa)
+maxdatar, maxdatarstd = averages(maxdatar)
+meandatar, meandatarstd = averages(meandatar)
+maxdataa, maxdataastd = averages(maxdataa)
+meandataa, meandataastd = averages(meandataa)
+enemy_plot(maxdatar, meandatar, maxdataa, meandataa, maxdatarstd, meandatarstd, maxdataastd, meandataastd)
         
 endboxr = [[] for i in range(8)]
 for i in range(10):
     runs = open_data("replaceresults/bestrunfitness" + str(i) + ".txt")
-    runs = averages(runs)
+    runs,std = averages(runs)
     
     for j in range(8):
         endboxr[j].append(runs[j])
     
-endboxr = averages(endboxr)
+endboxr,std = averages(endboxr)
 
 endboxa = [[] for i in range(8)]
 for i in range(10):
     runs = open_data("alterresults/bestrunfitness" + str(i) + ".txt")
-    runs = averages(runs)
+    runs,std = averages(runs)
     
     for j in range(8):
         endboxa[j].append(runs[j])
     
-endboxa = averages(endboxa)
+endboxa,std = averages(endboxa)
 boxplot(endboxr,endboxa)
