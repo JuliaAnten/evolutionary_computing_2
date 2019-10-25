@@ -1,11 +1,3 @@
-#######################################################################################
-# EvoMan FrameWork - V1.0 2016  			                                 		  #
-# DEMO : perceptron neural network controller evolved by Genetic Algorithm.        	  #
-#        general solution for enemies (games)                                         #
-# Author: Karine Miras        			                                      		  #
-# karine.smiras@gmail.com     				                              			  #
-#######################################################################################
-
 # imports framework
 import sys,os
 sys.path.insert(0, 'evoman')

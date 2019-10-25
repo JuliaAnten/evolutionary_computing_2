@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Oct 25 11:49:24 2019
-
-@author: Gebruiker
-"""
-
 import matplotlib.pyplot as plt
 
 def open_data(filename):
